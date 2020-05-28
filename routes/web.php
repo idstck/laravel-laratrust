@@ -20,3 +20,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::name('admin.')
+    ->prefix('admin')
+    ->namespace('Admin')
+    ->middleware(['auth', 'role:superadmin'])
+    ->group(function () {
+        Route::resource('user', 'UserController');
+    });
