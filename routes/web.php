@@ -30,3 +30,5 @@ Route::name('admin.')
         Route::resource('permission', 'PermissionController');
         Route::resource('role', 'RoleController');
     });
+
+Route::resource('article', 'ArticleController');
