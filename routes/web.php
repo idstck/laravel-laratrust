@@ -28,4 +28,5 @@ Route::name('admin.')
     ->group(function () {
         Route::resource('user', 'UserController');
         Route::resource('permission', 'PermissionController');
+        Route::resource('role', 'RoleController');
     });

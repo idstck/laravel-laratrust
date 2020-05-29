@@ -39,6 +39,9 @@
                         <li class="nav-item">
                             <a href="{{ route('admin.permission.index') }}" class="nav-link">Permission</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.role.index') }}" class="nav-link">Role</a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
