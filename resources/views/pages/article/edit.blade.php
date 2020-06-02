@@ -39,6 +39,7 @@
                             </div>
                         </div>
 
+                        @role(['superadmin', 'admin'])
                         <div class="form-group row">
                             <label for="published" class="col-md-3 col-form-label text-md-right">{{ __('Published') }}</label>
 
@@ -55,6 +56,7 @@
                                 @enderror
                             </div>
                         </div>
+                        @endrole
 
                         <div class="form-group row mb-0">
                             <div class="col-md-7 offset-md-3">

@@ -43,7 +43,6 @@ class ArticleController extends Controller
         $this->validate($request, [
             'title' => ['required', 'string', 'max:255'],
             'body' => ['required', 'string',],
-            'published' => ['required'],
         ]);
 
         request()->user()->articles()->create($request->all());
@@ -107,7 +106,6 @@ class ArticleController extends Controller
                 $this->validate($request, [
                     'title' => ['required', 'string', 'max:255'],
                     'body' => ['required', 'string',],
-                    'published' => ['required'],
                 ]);
 
                 $article->update($request->all());
