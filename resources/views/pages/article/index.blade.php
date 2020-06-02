@@ -21,6 +21,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Title</th>
+                                <th>Author</th>
                                 <th>Published</th>
                                 <th></th>
                             </tr>
@@ -30,6 +31,7 @@
                             <tr>
                                 <td>{{ $article->id }}</td>
                                 <td>{{ $article->title }}</td>
+                                <td>{{ $article->user->name }}</td>
                                 <td>{{ $article->published ? 'Published' : 'Unpublished' }}</td>
                                 <td>
                                     <form action="{{ route('article.destroy', $article->id) }}" method="post">

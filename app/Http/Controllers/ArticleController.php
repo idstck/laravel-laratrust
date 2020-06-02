@@ -73,7 +73,16 @@ class ArticleController extends Controller
         try {
             $article = Article::findOrFail($id);
 
-            return view('pages.article.edit', compact('article'));
+            if (
+                request()->user()->hasRole(['superadmin', 'admin']) ||
+                request()->user()->isAbleToAndOwns('update-articles', $article)
+            ) {
+                return view('pages.article.edit', compact('article'));
+            } else {
+                return redirect()->route('article.index')->with($this->permissionDenied());
+            }
+
+
         } catch (ModelNotFoundException $e) {
             return redirect()->route('article.index')->with($this->alertNotFound());
         }
@@ -91,15 +100,24 @@ class ArticleController extends Controller
         try {
             $article = Article::findOrFail($id);
 
-            $this->validate($request, [
-                'title' => ['required', 'string', 'max:255'],
-                'body' => ['required', 'string',],
-                'published' => ['required'],
-            ]);
+            if (
+                request()->user()->hasRole(['superadmin', 'admin']) ||
+                request()->user()->isAbleToAndOwns('update-articles', $article)
+            ) {
+                $this->validate($request, [
+                    'title' => ['required', 'string', 'max:255'],
+                    'body' => ['required', 'string',],
+                    'published' => ['required'],
+                ]);
 
-            $article->update($request->all());
+                $article->update($request->all());
 
-            return redirect()->route('article.index')->with($this->alertUpdated());
+                return redirect()->route('article.index')->with($this->alertUpdated());
+            } else {
+                return redirect()->route('article.index')->with($this->permissionDenied());
+            }
+
+
         } catch (ModelNotFoundException $e) {
             return redirect()->route('article.index')->with($this->alertNotFound());
         }
@@ -115,9 +133,19 @@ class ArticleController extends Controller
     {
         try {
             $article = Article::findOrFail($id);
-            $article->delete();
 
-            return redirect()->route('article.index')->with($this->alertDeleted());
+            if (
+                request()->user()->hasRole('superadmin') ||
+                request()->user()->isAbleToAndOwns('delete-articles', $article)
+            ) {
+                $article->delete();
+
+                return redirect()->route('article.index')->with($this->alertDeleted());
+            } else {
+                return redirect()->route('article.index')->with($this->permissionDenied());
+            }
+
+
         } catch (ModelNotFoundException $e) {
             return redirect()->route('article.index')->with($this->alertNotFound());
         }
